@@ -20,28 +20,29 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
+    Button addButton;
     EditText textBox;
-    ListView listView;
+    ListView todoList;
     ArrayList<String> list;
+    TodoAdapter todoAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.createButton);
+        addButton = findViewById(R.id.addButton);
         textBox = findViewById(R.id.textBox);
-        listView = findViewById(R.id.listView);
+        todoList = findViewById(R.id.todoListView);
         list = new ArrayList<>();
+        todoAdapter = new TodoAdapter(list, this);
     }
 
     public void onClickAdd(View view) {
         String text = textBox.getText().toString();
         if(!text.equals("")) {
             list.add(text);
-            ArrayAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-            listView.setAdapter(adapter);
+            todoList.setAdapter(todoAdapter);
             textBox.setText("");
         }
     }
