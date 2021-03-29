@@ -7,9 +7,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.ContextMenu;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
         todoAdapter = new TodoAdapter(list, this);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.item_options, menu);
+    }
+/*
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.delete:
+                deleteItem(info.id);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+*/
     public void onClickAdd(View view) {
         String text = textBox.getText().toString();
         if(!text.equals("")) {
@@ -45,5 +68,10 @@ public class MainActivity extends AppCompatActivity {
             todoList.setAdapter(todoAdapter);
             textBox.setText("");
         }
+    }
+
+    public void onCheck(View view) {
+        CheckBox checkBox = view.findViewById(R.id.checkBox);
+        list.remove(this);
     }
 }
