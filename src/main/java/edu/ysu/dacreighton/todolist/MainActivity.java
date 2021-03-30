@@ -2,6 +2,7 @@ package edu.ysu.dacreighton.todolist;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -30,37 +31,22 @@ public class MainActivity extends AppCompatActivity {
     ListView todoList;
     ArrayList<String> list;
     TodoAdapter todoAdapter;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        intent = new Intent(this, SecondActivity.class);
 
         addButton = findViewById(R.id.addButton);
         textBox = findViewById(R.id.textBox);
         todoList = findViewById(R.id.todoListView);
         list = new ArrayList<>();
         todoAdapter = new TodoAdapter(list, this);
+        todoList.setOnItemClickListener(listClick);
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, view, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.item_options, menu);
-    }
-/*
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.delete:
-                deleteItem(info.id);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
-    }
-*/
     public void onClickAdd(View view) {
         String text = textBox.getText().toString();
         if(!text.equals("")) {
@@ -70,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onCheck(View view) {
-        CheckBox checkBox = view.findViewById(R.id.checkBox);
-        list.remove(this);
-    }
+    private AdapterView.OnItemClickListener listClick = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            String itemValue = (String)todoList.getItemAtPosition(position);
+            intent.putExtra("ITEM_SELECTED", itemValue);
+            startActivity(intent);
+        }
+    };
 }
