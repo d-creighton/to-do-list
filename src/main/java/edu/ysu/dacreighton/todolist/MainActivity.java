@@ -55,7 +55,14 @@ public class MainActivity extends AppCompatActivity {
             textBox.setText("");
         }
     }
-
+/*
+    public void onCheck(View view) {
+        //int position = todoList.getSelectedItemPosition();
+        todoAdapter.getItem(todoList.getSelectedItemPosition());
+        //list.remove(position);
+        todoAdapter.remove(position);
+    }
+*/
     private AdapterView.OnItemClickListener listClick = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             String itemValue = (String)todoList.getItemAtPosition(position);

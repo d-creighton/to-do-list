@@ -45,4 +45,8 @@ public class TodoAdapter extends BaseAdapter {
 
         return view;
     }
+
+    public void remove(int position) {
+        todoList.remove(todoList.get(position));
+    }
 }
